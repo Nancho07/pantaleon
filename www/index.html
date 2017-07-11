@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html>
+<!--
+  * Please see the included README.md file for license terms and conditions.
+  -->
+<head>
+    <title>Blank Cordova Mobile App Project Template (Lite)</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">    
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" href="css/imix.css">
+
+    <link rel="stylesheet" href="chat/css/style.css">
+
+    
+    <!--<link rel='stylesheet prefetch' href='css/materialdesignicons.min.css'>-->
+    <link rel='stylesheet prefetch' href='//cdn.materialdesignicons.com/1.9.32/css/materialdesignicons.min.css'>
+    <!--<link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Roboto:300'>-->
+    <link rel="stylesheet" type="text/css" href="css/jquery-confirm.css"/>    
+
+    <style>
+
+        @-ms-viewport { width: 100vw ; zoom: 100% ; }  @viewport { width: 100vw ; zoom: 100% ; }
+        @-ms-viewport { user-zoom: fixed ; }           @viewport { user-zoom: fixed ; }
+    </style>
+    
+    <script src='js/jquery.min.js'></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript" src="js/jquery-confirm.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        jQuery.fn.extend({
+            resaltar: function(busqueda, claseCSSbusqueda){
+                var regex = new RegExp("(<[^>]*>)|("+ busqueda.replace(/([-.*+?^${}()|[\]\/\\])/g,"\\$1") +')', 'ig');
+                var nuevoHtml=this.html(this.html().replace(regex, function(a, b, c){
+                    return (a.charAt(0) == "<") ? a : "<span class=\""+ claseCSSbusqueda +"\">" + c + "</span>";
+                }));
+                return nuevoHtml;
+            }
+        });
+    </script>
+    <script src="js/md5.js"></script>
+    <script src="js/imixio.js"></script>
+    <script src="cordova.js"></script>          <!-- phantom library, needed for Cordova api calls, added during build -->
+    <script src="../plugins/cordova-sqlite-storage/www/SQLitePlugin.js"></script>
+    
+    <script src="js/init-app.js"></script>
+    <!--<script src="chat/js/index.js"></script>-->
+    <script src="js/app.js"></script>           <!-- recommended location of your JavaScript code relative to other JS files -->
+    <script src="xdk/init-dev.js"></script>     <!-- normalizes device and document ready events, see README for details -->
+    <!--<script src="jquery-scrollto/vendor/jquery.js"></script>-->
+    <script src="jquery-scrollto/lib/jquery-scrollto.js"></script>  
+    
+    <style>
+        .resaltarTexto{
+            color: #0000ff;
+            background-color: #FFFF96;
+        }
+    </style>
+</head>
+<body>
+    <div class="modal outer-element uib_w_23" data-uib="twitter%20bootstrap/modal" data-ver="1" data-backdrop="true" id="usuarios_registrados" data-keyboard="true">
+        <div class="modal-dialog">
+            <div class="modal-content" >
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">x</button>
+                    <h4 class="modal-title">Usuarios de este dispositivo</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="col uib_col_4 single-col" data-uib="layout/col" data-ver="0">
+                        <div class="chat-history">
+                          <ul id="mensajes">
+                          </ul>
+                        </div>
+                        <div class="widget-container content-area vertical-col" id="mensaje_servidor">
+                        </div>
+                        <div class="widget-container content-area vertical-col" id="usuarios_reg">
+                        </div>
+                        <div class="widget-container content-area vertical-col" id="participante_reg">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn btn-default" type="button">cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    Noticias   -->
+    <div data-role="page" data-name = "info" id="info" name = "info">
+        <div data-role="header" data-position='fixed' id="headerMaster">
+            <div class="widget-container wrapping-col single-centered">
+                <div class="col-xs-12" >
+                    <span class="col-xs-2" align="center">
+                        <img class="btnSenal0" id="btnSenal0" src="images/senal0.png" width="70%" style="vertical-align:middle; margin-top:4px;"/>
+                    </span>
+                    <span class="col-xs-8" align="center">
+                        <img src="images/pantaleon_mini.png" width="80%" style="vertical-align:middle;"/>
+                    </span>
+                    <span class="col-xs-2" align="center">
+                        <img class="btnSenal1" id="btnSenal1" src="images/senal0.png" width="70%" style="vertical-align:middle; margin-top:4px;"/>
+                    </span>
+                </div>
+            </div>
+            <div class="widget-container content-area horiz-area wrapping-col left"></div>
+            <div class="widget-container content-area horiz-area wrapping-col right"></div>
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#" class="ui-btn-active" data-icon="home">Informativo</a></li>
+                    <li><a href="#inicio" class="ui-btn" data-icon="home">Inicio</a></li>
+                    <li><a href="#acceso" data-icon="arrow-r">Acceso</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            <div>
+                <div class="container col-xs-12">
+                    <button class="btn" id="desplegar">Mostrar</button>
+                    <div id="texto-titulo"></div>
+                    <div  id="accordion"></div><!--class="panel-group"-->
+                </div>              
+            </div>
+        </div>
+        <div data-role="footer"  data-position='fixed'>
+            <label id="msjInicio">Mensaje: </label>
+        </div>
+    </div>
+    <!-- /Fin noticias -->
+    <div data-role="page" data-name = "Inicio" id="inicio">
+        <div data-role="header" data-position='fixed'>
+            <div class="widget-container wrapping-col single-centered">
+                <div class="col-xs-12" >
+                    <span class="col-xs-2" align="center">
+                        <img class="btnSenal0" id="btnSenal2" src="images/senal0.png" width="70%" style="vertical-align:middle; margin-top:4px;"/>
+                    </span>
+                    <span class="col-xs-8" align="center">
+                        <img src="images/pantaleon_mini.png" width="80%" style="vertical-align:middle;"/>
+                    </span>
+                    <span class="col-xs-2" align="center">
+                        <img class="btnSenal1" id="btnSenal3" src="images/senal0.png" width="70%" style="vertical-align:middle; margin-top:4px;"/>
+                    </span>
+                </div>
+            </div>
+            <div class="widget-container content-area horiz-area wrapping-col left"></div>
+            <div class="widget-container content-area horiz-area wrapping-col right"></div>
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#info" class="ui-btn" data-icon="home">Informativo</a></li>
+                    <li><a href="#" class="ui-btn-active" data-icon="home">Inicio</a></li>
+                    <li><a href="#acceso" class="ui-btn" data-icon="arrow-r">Acceso</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container-fluid" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+            <!--<div class="encabezado col-xs-12" style="margin-top:20px;" >
+                <div align="center" style="Width:100%">
+                    <label id="horahoy" style="text-align:center; color:#387ef5; font-size:26px;">Esta es la hora</label>
+                </div>
+            </div>-->
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#home">Inicio</a></li>
+                <li><a data-toggle="tab" href="#menu4" onClick="actualizarContactos();">Directorio</a></li>
+                <li><a data-toggle="tab" href="#menu5">Logs</a></li>
+                <li><a data-toggle="tab" href="#menu6" onClick="actualizarNotificaciones();">Notificaciones</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="home" class="tab-pane fade in active">
+                <h3>BIENVENIDO</h3>
+                <p>Esta aplicación es una version de cortesia para la unidad de RSE de Pantaleon Honduras, en colaboración con el Ing. Jose L. Carbajal.</p>
+                <h3>PRIMEROS PASOS</h3>
+                  <p>Si es la primera vez que esta ingresando a esta aplicación debe de registrarse y crear una cuenta de usuario, la cuenta estara funsionando inmediatamente pero no alojara datos al servidor hasta estar debidamente registrado enla base de datos del servidor, el administrador del sistema dara de alta al usuario despues de que este haya realizado el envio de datos.</p><br>
+                    <div class="row botones_usuario" style="background-color:#3388cc; border-radius:20px;">
+                        <div align="left" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <button class="btn btn-primary btn-block" id="solicit_fecha">Contactos <img src="images/pantaleon36.png" /></button>
+                            <!--<a href="#" data-type="button" data-role="button" id="solicit_fecha">Contactos<img src="images/pantaleon36.png" /></a>-->
+                        </div>
+                        <div align="left" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <a href="#" data-type="button" data-role="button" id="solicit_clave">Crear<img src="images/pantaleon36.png" /></a>
+                        </div>
+                    </div>
+                    <h3>CONTACTOS</h3>
+                    <p>La creacion de contactos podra ser realizada aun si no esta registrado en el servidor web, pero los datos seran llevados al servidor hasta que el administrador del sistema haya dado de alta al usuario. antes de ingresar un participante debe tener creado los grupos</p>
+                    <h3>GRUPOS</h3>
+                  <p>Los grupos o forma de agrupación de los participantes permiten la administracion de datos y la medición y seguimiento de las operaciones.</p>
+                </div>
+                <div id="menu4" class="tab-pane fade">
+                  <h3>Contactos Registrados</h3>
+                    <div class="hangout"> 
+                      <div id="contactosRegistrados" class="list mat-ripple">
+                        <div class="userLink tel ucr" data-link="">                            
+                            <div class="content-container col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	                                <div class="name col-xs-6 col-sm-6 col-md-6 col-lg-6">Hernan Guevara</div>
+	                                <div class="phone col-xs-6 col-sm-6 col-md-6 col-lg-6">
+	                                	<a class="phone" href="tel:9453-2620">2226-7590</a>
+	                                </div>
+	                            </div>
+	                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">     
+	                                <div class="txt col-xs-6 col-sm-6 col-md-6 col-lg-6">
+	                                	<a href="mailto:hernan@imixdigital.com">hernan@imixdigital.com</a>
+	                                </div>
+	                                <div class="phone col-xs-6 col-sm-6 col-md-6 col-lg-6">
+	                                	<a class="phone" href="tel:9453-2620">9453-2620</a>
+	                                </div>
+                                </div>
+                            </div>
+                		</div>
+                      </div>
+                        <h3>Usuarios Registrados</h3>
+                      <ul id="usuariosRegistrados" class="list mat-ripple">No hay</ul>
+                        <h3>Conyugues Registrados</h3>
+                      <p id="conyuguesRegistrados">No hay</p>
+                    </div>
+                </div>
+                <div id="menu5" class="tab-pane fade">
+                    <div class="row botones_usuario" style="background-color:#3388cc; border-radius:20px;">
+                        <div align="left" class="col-xs-2 col-sm-2 col-md-4 col-lg-4">
+                            <a href="#" data-type="button" data-role="button" id="borrar_logs">Borrar Logs<img src="images/pantaleon36.png" /></a>
+                        </div>
+                        <div align="left" class="col-xs-8 col-sm-8 col-md-8 col-lg-4">
+                            <a href="#" data-type="button" data-role="button" id="eliminar_logs">Eliminar Logs<img src="images/pantaleon36.png" /></a>
+                        </div>
+                        <div align="left" class="col-xs-2 col-sm-2 col-md-4 col-lg-4">
+                            <a href="#" data-type="button" data-role="button" id="enviar_logs">Enviar logs<img src="images/pantaleon36.png" /></a>
+                        </div>
+                    </div>
+                  <div id="Logs">
+                    <table class='contenido_mensaje'>
+                        <tr>
+                           <td class='titulo_mensaje'>No hay registros en base de datos logs</td>
+                        </tr>
+                    </table>
+                  </div>
+                </div>
+                <div id="menu6" class="tab-pane fade">
+                    <div id="Notificaciones" class='reg col-xs-12 col-sm-12 col-md-12 col-lg-12' style="background-color:#fff; border-radius:20px;">
+                        <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+                            <table class="contenido_mensaje">
+                                <tr>
+                                   <td class='titulo_mensaje'>No hay mensajes en la base de datos</td>
+                               </tr>
+                            </table>
+                        </div>
+                    </div>
+                  <p></p>
+                </div>
+            </div>
+        </div>
+        <div data-role="footer" data-position='fixed'>
+            <label id="msjInicio">Mensaje: </label>
+        </div>
+    </div>
+    <div data-role="page" id="acceso" data-name = "Acceso">
+        <div data-role="header" data-position='fixed'>
+            <div class="widget-container wrapping-col single-centered">
+                <div class="col-xs-12" >
+                    <span class="col-xs-2" align="center">
+                        <img class="btnSenal0" id="btnSenal2" src="images/senal0.png" width="70%" style="vertical-align:middle; margin-top:4px;"/>
+                    </span>
+                    <span class="col-xs-8" align="center">
+                        <img src="images/pantaleon_mini.png" width="80%" style="vertical-align:middle;"/>
+                    </span>
+                    <span class="col-xs-2" align="center">
+                        <img class="btnSenal1" id="btnSenal3" src="images/senal0.png" width="70%" style="vertical-align:middle; margin-top:4px;"/>
+                    </span>
+                </div>
+            </div>
+            <div class="widget-container content-area horiz-area wrapping-col left"></div>
+            <div class="widget-container content-area horiz-area wrapping-col right"></div>
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#info" class="ui-btn" data-icon="home">Informativo</a></li>
+                    <li><a href="#inicio" class="ui-btn" data-icon="home">Inicio</a></li>
+                    <li><a href="#" class="ui-btn-active" data-icon="arrow-r">Acceso</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container-fluid" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h2>Acceso</h2>
+            <form data-ajax="false" >
+                <div class="form-group">
+                    <label for="nameUsuario">Direccion email</label>
+                    <input type="email" class="form-control" placeholder="Usuario" id="nameUsuario">
+                </div>
+                <div class="form-group">
+                    <label for="passwordUsuario">Clave</label>
+                    <input type="password" class="form-control" id="passwordUsuario" placeholder="Password">
+                </div>
+                <button type="button" class="btn btn-default" id="enviar">Enviar</button>
+            </form>
+            <ul id="msjUsuarioAcceso">Mensaje: </ul>
+        </div>
+    </div>
+    <div data-role="page" id="menu" data-name = "Menú">
+        <div data-role="header"  data-position='fixed'>
+            <div class="widget-container wrapping-col single-centered">
+                <div class="col-xs-12" >
+                    <span class="col-xs-2" align="center">
+                        <!--<img class="btnSenal0" id="btnSenal2" src="images/senal0.png" style="vertical-align:middle; margin-top:10px;"/>-->
+                    </span>
+                    <span class="col-xs-8" align="center">
+                        <img src="images/imix_forms4.png" style="vertical-align:middle;margin-top:10px;"/>
+                    </span>
+                    <span class="col-xs-2" align="center">
+                        <!--<img class="btnSenal1" id="btnSenal3" src="images/senal0.png" style="vertical-align:middle; margin-top:1px;"/>-->
+                    </span>
+                </div>
+            </div>
+            <div class="widget-container content-area horiz-area wrapping-col left"></div>
+            <div class="widget-container content-area horiz-area wrapping-col right"></div>
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#inicio" data-icon="home">Inicio</a></li>
+                    <li><a href="#acceso" data-icon="arrow-r">Acceso</a></li>
+                    <li><a href="#" data-icon="arrow-r" class="ui-btn-active" >Menú</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container-fluid" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="row">
+                <div  class="col-xs-6 col-md-6">
+                    <a href="#usuario" data-role="button" data-theme="a">
+                        <img src="images/pantaleon48.png" class="imgBtn"/>
+                        <label class="btnText">Registro de usuario</label>
+                    </a>
+                </div>
+                <div  class="col-xs-6 col-md-6">
+                    <a href="#participante" data-role="button" data-theme="a">
+                        <img src="images/pantaleon48.png" class="imgBtn"/>
+                        <label class="btnText">Registro de participantes</label>
+                    </a>                    
+                </div>
+            </div>
+            <div class="row">
+                <div  class="col-xs-6 col-md-6">
+                    <button onClick="setName();">                        
+                        <img src="images/pantaleon48.png" class="imgBtn"/>
+                        <label class="btnText">Contactos</label>                      
+                    </button>
+                </div>
+                <div  class="col-xs-6 col-md-6">
+                    <a href="#listaParticipantes" data-role="button" data-theme="a">
+                        <img src="images/pantaleon48.png" class="imgBtn"/>
+                        <label class="btnText">Lista de participantes</label>
+                    </a>   
+                    <!--<button id="btnListaParticipantes">
+                        <img src="images/pantaleon48.png" class="imgBtn"/>
+                        <label class="btnText">Lista de participantes</label>
+                    </button>-->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-md-6">
+                    <a href="#listaGrupos" data-role="button" data-theme="a">
+                        <img src="images/pantaleon48.png" class="imgBtn"/>
+                        <label class="btnText">Grupos</label>
+                    </a>
+                </div>
+                <div class="col-xs-6 col-md-6">
+                    <a href="#chat" data-role="button" data-theme="a">
+                        <img src="images/pantaleon48.png" class="imgBtn"/>
+                        <label class="btnText">Chat</label>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div data-role="page" id="usuario" data-name = "Usuario" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div data-role="header"  data-position="fixed">            	
+            <div data-role="navbar" id="navbarUsuario"><!-- class="ui-disabled"-->
+	            <div class="widget-container wrapping-col single-centered">
+	                <div class="col-xs-12" >
+	                    <span class="col-xs-2" align="center">
+	                        <!--<img class="btnSenal0" id="btnSenal2" src="images/senal0.png" style="vertical-align:middle; margin-top:10px;"/>-->
+	                    </span>
+	                    <span class="col-xs-8" align="center">
+	                        <img src="images/imix_forms4.png" style="vertical-align:middle;margin-top:10px;"/>
+	                    </span>
+	                    <span class="col-xs-2" align="center">
+	                        <!--<img class="btnSenal1" id="btnSenal3" src="images/senal0.png" style="vertical-align:middle; margin-top:1px;"/>-->
+	                    </span>
+	                </div>
+	            </div>
+	            <div class="widget-container content-area horiz-area wrapping-col left"></div>
+	            <div class="widget-container content-area horiz-area wrapping-col right"></div>
+                <ul>
+                    <li><a href="#" class = "inicio" data-icon="home">Inicio</a></li>
+                    <li><a href="#" class = "acceso" data-icon="arrow-r">Acceso</a></li>
+                    <li><a href="#" class = "menu1" data-icon="arrow-r">Menú</a></li>
+                    <li><a href="#" class = "ui-btn-active" data-icon="arrow-r">Usuarios</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container-fluid" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="row" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 panelPage">
+                <div align="left" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 altoBox"  >
+	                <div class="row col-xs-12 col-sm-12">
+	                    <label for="fotoUsuario">Usuario</label><br><br>
+	                    <!--<div align="center" id="fotoUsuario" style="width:100%; height:185px;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	                        <span><img src="images/pantaleon48.png" width="150px"/></span>
+	                    </div>-->
+	                    <div align="left" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		                    <!--<label for="nombreimagenUsuario">Nombre Imagen</label>-->
+		                   <!-- <input type="hidden" data-type="text" id="nombreimagenUsuario"/>-->
+		                    <label for="id">Id</label>
+		                    <input type="number" type="number" data-clear-btn="true" disabled="disabled" id="id"/>
+		                    <!--<label for="nombreUsuario">Nombre</label>-->
+		                    <input data-type="text" id="nombreUsuario" placeholder="Nombre"/>  
+		                    <!--<label for="apellidoUsuario">Apellido</label>-->
+		                    <input data-type="text" id="apellidoUsuario" placeholder="Apellido"/>
+		                    <!--<label for="identificacionUsuario">Identidad</label>-->
+		                    <input data-type="text" id="identificacionUsuario" placeholder="Identificación"/>
+		                    <label for="generoUsuario">Genero</label>
+		                    <select id="generoUsuario" align="left">
+		                        <option val="Masculino">Masculino</option>
+		                        <option val="Femenino">Femenino</option>
+		                    </select>	
+		                </div>                    
+	                </div>
+                </div>
+                <div align="left" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 altoBox"  >
+	                <div class="row col-xs-12 col-sm-12">
+	                	
+	                    <label for="fechanacimientoUsuario">Fecha de nacimiento</label>
+	                    <input type="date" data-clear-btn="true" name="date-1" id="fechanacimientoUsuario" value="">
+	                    <label for="cargoUsuario">Cargo</label>
+	                    <input data-type="text" id="cargoUsuario"/>
+	                    <label for="telefonoUsuario">Teléfono</label>
+	                    <input data-type="text" id="telefonoUsuario"/> 
+	                    <label for="emailUsuario">Email</label>
+	                    <input type="email" data-clear-btn="true" name="email-1" id="emailUsuario" value=""> 
+	                    <label for="nacionalidadUsuario">Nacionalidad</label>
+	                    <select id="nacionalidadUsuario" align="left">
+	                        <option val="Honduras">Honduras</option>
+	                    </select>
+	                    <label for="estadocivilUsuario">Estado civil</label>
+	                    <select id="estadocivilUsuario" align="left">
+	                        <option value="Casada(o)">Casado</option>
+	                        <option value="Soltera(o)">Soltera(o)</option>
+	                        <option value="Union libre">Union libre</option>
+	                        <option value="Divorciada(o)">Divorciada(o)</option>
+	                        <option value="Viuda(o)">Viuda(o)</option>
+	                    </select>
+	                </div>
+                </div>
+                <div align="left" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 altoBox"  >
+                	<!--<div class="row col-xs-12 col-sm-12">                		
+	                    <div class="row" style="background-color:#3388cc; border-radius:20px;">
+	                        <div align="left" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+	                            <label for="conyugueUsuario" style="color:#fff">Conyugue</label>
+	                            <input data-type="text" id="conyugueUsuario"/>
+	                        </div>
+	                        <div align="left" class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+	                            <a href="#conyugue" data-type="button" data-role="button"><img src="images/pantaleon36.png" /></a>
+	                        </div>
+	                        <div align="left" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+	                            <label for="estadofisicoUsuario" style="color:#fff">Estado fisico</label>
+	                            <input data-type="text" id="estadofisicoUsuario"/>
+	                        </div>
+	                        <div align="left" class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+	                            <a href="#estadoFisico" data-type="button" data-role="button"><img src="images/pantaleon36.png" /></a>
+	                        </div>
+	                    </div>
+                	</div>-->
+	                <div class="row col-xs-12 col-sm-12">
+	                    <div data-theme="c" data-content-theme="d">
+	                        <legend>Dirección:</legend>
+	                        <!--<fieldset data-role="controlgroup" data-theme="a" data-iconpos="right">-->
+		                        <label for="paisUsuario">País</label>
+		                        <select id="paisUsuario" align="left">
+		                            <option val="Honduras">Honduras</option>
+		                        </select>
+		                        <label for="estadoUsuario">Departamento</label>
+		                        <select id="estadoUsuario" align="left">
+		                            <!--<option val="Francisco Morazan">Francisco Morazan</option>-->
+		                        </select>
+		                        <label for="municipioUsuario">Municipio</label>
+		                        <select id="municipioUsuario" align="left">
+		                            <option val="Distrit Central" >Distrito Central</option>
+		                        </select>
+		                        <!--<label for="direccionUsuario">Dirección</label>-->
+		                        <textarea id="direccionUsuario" rows="8" cols="100%" placeholder="Dirección"></textarea>
+	                        <!--/fieldset>-->
+	                    </div>
+	                </div>
+                </div>
+                <div align="left" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 altoBox"  >
+	                <div class="row col-xs-12 col-sm-12">
+	                    <legend>Datos de acceso:</legend>
+	                    <!--<fieldset data-role="controlgroup" data-theme="a" data-iconpos="right">-->
+	                        <label for="usuarioNombre">Nombre de usuario</label>
+	                        <input data-type="text" id="usuarioNombre"/> 
+	                        <label for="usuarioClave">CLave</label>
+	                        <input type="password" id="usuarioClave"/> 
+	                        <label for="confirmarUsuarioClave">Confirmar Clave</label>
+	                        <input type="password" id="confirmarUsuarioClave"/>
+	                        <label for="observacionesUsuario">Observaciones</label>
+	                        <textarea rows="8" cols="100%" id="observacionesUsuario"></textarea> 
+	                    <!--</fieldset>-->
+	                    <button data-role="button" id="guardarUsuario"><img src="images/pantaleon36.png" /></button>
+	                </div>
+	            </div>
+            </div>
+        </div>
+        <div data-role="footer"  data-position='fixed'  class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <label id="msjUsuario">Mensaje: </label>
+        </div>
+    </div>
+    <div data-role="page" id="conyugue" data-name="Conyugue" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div data-role="header"  data-position='fixed'>
+	        <div class="col-xs-12" >
+	            <span class="col-xs-4" align="center">
+	                <a href="#" data-rel="back" data-role="button" id="regresar" style="vertical-align:middle;margin-top:15px;">Regresar</a>
+	            </span>
+	            <span class="col-xs-8" align="center">
+	                <img src="images/imix_forms4.png" style="vertical-align:middle;margin-top:10px;"/>
+	            </span>
+	            <!--<span class="col-xs-2" align="center">
+	            </span>-->
+	        </div>
+        </div>
+        <div class="container-fluid" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 panelPage">
+                <div align="left" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 altoBox" style="margin-top:35px; float:left;">
+                    <label for="fotoConyugue">Datos Conyugue</label><br><br>
+                    <!--<div align="center" id="fotoConyugue" style="width:100%; height:185px;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <span><img src="images/pantaleon48.png" width="150px"/></span>
+                    </div>
+                    <label for="nombreimagenConyugue">Nombre Imagen</label>
+                    <input data-type="text" id="nombreimagenConyugue"/>-->
+                    <label for="idConyugue">Id</label>
+                    <input type="number" data-clear-btn="true" disabled="disabled"  id="idConyugue"/>
+                    <label for="nombreConyugue">Nombre</label>
+                    <input data-type="text" id="nombreConyugue"/>
+                    <label for="apellidoConyugue">Apellido</label>
+                    <input data-type="text" id="apellidoConyugue"/>                    
+                </div>
+                <div align="left" class="col-xs-12 col-sm-6 col-md-3 col-lg-3" style="margin-top:35px; float:left;">      
+                    <label for="generoConyugue">Genero</label>
+                    <select id="generoConyugue" align="left">
+                        <option val="Masculino">Masculino</option>
+                        <option val="Femenino">Femenino</option>
+                    </select>
+                    <label for="identificacionConyugue">Identidad</label>
+                    <input data-type="text" id="identificacionConyugue"/>
+                    <label for="fechanacimientoConyugue">Fecha de nacimiento</label>
+                    <input type="date" data-clear-btn="true" name="date-1" id="fechanacimientoConyugue" value="">
+                    <label for="nacionalidadConyugue">País</label>
+                    <select id="nacionalidadConyugue" align="left">
+                        <option val="Honduras">Honduras</option>
+                    </select>
+                </div>
+                <div align="left" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 altoBox" style="margin-top:35px; float:left;">
+                    <label for="telefonoConyugue">Teléfono</label>
+                    <input data-type="text" id="telefonoConyugue"/> 
+                    <label for="emailConyugue">Email</label>
+                    <input type="email" data-clear-btn="true" name="email-1" id="emailConyugue" value="">
+                    <div data-role="collapsible-set" data-theme="c" data-content-theme="d">
+                        <div data-role="collapsible">
+                            <legend>Dirección:</legend>
+                            <label for="paisConyugue">País</label>
+                            <select id="paisConyugue" align="left">
+                                <option val="Honduras">Honduras</option>
+                            </select>
+                            <label for="estadoConyugue">Departamento</label>
+                            <select id="estadoConyugue" align="left">
+                                <option val="Francisco Morazan">Francisco Morazan</option>
+                            </select>
+                            <label for="municipioConyugue">Municipio</label>
+                            <select id="municipioConyugue" align="left">
+                                <option val="Distrit Central" >Distrito Central</option>
+                            </select>
+                            <label for="direccionConyugue">Dirección</label>
+                            <textarea id="direccionConyugue"></textarea>
+                        </div>                
+                    </div>
+                    <div class="row" style="background-color:#3388cc; border-radius:20px;">
+                        <div align="left" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                            <label for="estadofisicoConyugue" style="color:#fff">Estado fisico</label>
+                            <input data-type="text" id="estadofisicoConyugue"/>
+                        </div>
+                        <div align="left" class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <!--<button><img src="images/pantaleon36.png" /></button>-->
+                            <a href="#estadoFisico" data-type="button" data-role="button"><img src="images/pantaleon36.png" /></a>
+                        </div>
+                    </div>
+                    <label for="observacionesConyugue">Observaciones</label>
+                    <textarea id="observacionesConyugue"></textarea>
+                </div>
+            </div>
+        </div>
+        <div data-role="footer"  data-position='fixed' class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <button data-role="button" id="guardarConyugue"><img src="images/pantaleon36.png" /></button>
+            <label id="msjConyugue">Mensaje: </label>
+        </div>
+    </div>
+    <div data-role="page" id="estadoFisico"  data-name="Estado fisico">
+        <div data-role="header"  data-position='fixed'>
+            <div class="col-xs-12" >
+	            <span class="col-xs-4" align="center">
+	                <a href="#" data-rel="back" data-role="button" id="regresar" style="vertical-align:middle;margin-top:15px;">Regresar</a>
+	            </span>
+	            <span class="col-xs-8" align="center">
+	                <img src="images/imix_forms4.png" style="vertical-align:middle;margin-top:10px;"/>
+	            </span>
+	            <!--<span class="col-xs-2" align="center">
+	            </span>-->
+	        </div>
+        </div>
+        <div class="container-fluid" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 panelPage">
+                <div align="left" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 altoBox">
+                    <form>
+                        <legend>Estado Físico <br><br> Mediciones</legend>
+                        <input type="hidden" data-clear-btn="true" disabled="disabled" id="idParent"/>
+                        <input type="hidden" data-clear-btn="true" id="idEstadoFisico" disabled="disabled"/>
+                        <div data-role="fieldcontain">
+                            <label for="alturaMetros">Alt. Mts</label>
+                            <!--<input type="number" data-clear-btn="true" id="alturaMetros" onfocusout="toPies()"/>-->
+                            <input type="number" step="any"  name="my-num" data-clear-btn="true" id="alturaMetros" onfocusout="toPies()"/>
+                        </div>
+                        <div data-role="fieldcontain">
+                            <label for="alturaPies">Alt. Pies</label>
+                            <input type="number" step="any" data-clear-btn="true" id="alturaPies" onfocusout="toMetros()"/> 
+                        </div>
+                        <div data-role="fieldcontain">
+                            <label for="pesoLibras">Peso Lbs</label>
+                            <input type="number" step="any" data-clear-btn="true" id="pesoLibras" onfocusout="toKilo()"/>  
+                        </div>
+                        <div data-role="fieldcontain">
+                            <label for="pesoKilo">Peso Kgms</label>
+                            <input type="number" step="any" data-clear-btn="true" id="pesoKilo" onfocusout="toLibras()"/>
+                        </div>
+                        <div data-role="fieldcontain">
+                            <label for="psa">Presión arterial</label>
+                            <input type="text" data-clear-btn="true" id="psa"/>
+                        </div>
+                    </form>
+                    <button id="imc" onClick="imc();"><img src="images/pantaleon36.png" /></button>
+                </div>
+                <div align="left" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 altoBox"> 
+                     <form>
+                        <fieldset data-role="controlgroup">
+                            <legend>Padecimientos</legend>
+                            <input type="checkbox" name="diabetes" id="diabetes">
+                            <label for="diabetes">Diabetes</label>
+                            <input type="checkbox" name="miopia" id="miopia">
+                            <label for="miopia">Miopia</label>
+                            <input type="checkbox" name="colesterol" id="colesterol">
+                            <label for="colesterol">Colesterol</label>
+                            <input type="checkbox" name="asma" id="asma">
+                            <label for="asma">Asma</label>
+                            <input type="checkbox" name="depresion" id="depresion">
+                            <label for="depresion">Depresión</label>
+                            <input type="checkbox" name="migraña" id="migraña">
+                            <label for="migraña">Migraña</label>
+                            <input type="checkbox" name="cancer" id="cancer">
+                            <label for="cancer">Cancer de mama</label>
+                            <input type="checkbox" name="hipertension" id="hipertension">
+                            <label for="hipertension">Hipertension</label>
+                            <input type="checkbox" name="eccemas" id="eccemas">
+                            <label for="eccemas">Eccemas</label>
+                        </fieldset>
+                    </form>                                
+                </div>   
+                <div align="left" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 altoBox">
+                    <form>
+                        <fieldset data-role="controlgroup">
+                            <legend>Adicciones / Habitos</legend>
+                            <input type="checkbox" name="alcohol" id="alcohol">
+                            <label for="alcohol">Alcohol</label>
+                            <input type="checkbox" name="anfetaminas" id="anfetaminas">
+                            <label for="anfetaminas">Anfetaminas</label>
+                            <input type="checkbox" name="canabis" id="canabis">
+                            <label for="canabis">Canabis</label>
+                            <input type="checkbox" name="tabaco" id="tabaco">
+                            <label for="asma">Tabaco</label>
+                            <input type="checkbox" name="cocaina" id="cocaina">
+                            <label for="cocaina">Cocaina</label>
+                            <input type="checkbox" name="bcafe" id="bcafe">
+                            <label for="bcafe">Cafe</label>
+                            <input type="checkbox" name="gaseosas" id="gaseosas">
+                            <label for="gaseosas">Gaseosas</label>
+                            <input type="checkbox" name="dulces" id="dulces">
+                            <label for="dulces">Dulces</label>
+                        </fieldset>
+                    </form>                     
+                </div> 
+                <div align="left" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 altoBox">
+                    <form>
+                        <legend>Descripciones:</legend> 
+                        <div data-role="collapsible-set" data-theme="c" data-content-theme="d">
+                            <div data-role="collapsible">
+                                <legend>Grupo Sanguineo: <span id="lgs"></span></legend> 
+                                <fieldset data-role="controlgroup" id="gruposanguineo">                        
+                                    <input type="radio" name="grupoSanguineo" data-clear-btn="true" value="O" id="O" onclick="gruposangre(this.value)"/>  
+                                    <label for="O">O</label>                            
+                                    <input type="radio" name="grupoSanguineo" data-clear-btn="true" value="A" id="A"  onclick="gruposangre(this.value)"/> 
+                                    <label for="A">A</label>                            
+                                    <input type="radio" name="grupoSanguineo" data-clear-btn="true" value="B" id="B"  onclick="gruposangre(this.value)"/>  
+                                    <label for="B">B</label>                            
+                                    <input type="radio" name="grupoSanguineo" data-clear-btn="true" value="AB" id="AB"  onclick="gruposangre(this.value)"/>
+                                    <label for="AB">AB</label>
+                                </fieldset>
+                            </div>
+                            <div data-role="collapsible">
+                                <legend>factor Rh: <span id="lrh"></span></legend> 
+                                 <fieldset data-role="controlgroup" >
+                                    <label for="rh+">Rh+</label>
+                                    <input type="radio" name="rh" data-clear-btn="true" value="rh+" id="rh+"  onclick="factorh(this.value)"/>
+                                    <label for="rh-">Rh-</label>
+                                    <input type="radio" name="rh" data-clear-btn="true" value="rh-" id="rh-"  onclick="factorh(this.value)"/>
+                                </fieldset>
+                            </div>
+                            <div data-role="collapsible">
+                                <legend>Piel: <span id="lpiel"></span></legend>
+                                <fieldset data-role="controlgroup">
+                                    <input type="radio" name="piel" id="blanco" value="blanco"  onclick="pielColor(this.value)">
+                                    <label for="blanco">Blanco</label>
+                                    <input type="radio" name="piel" id="obscura" value="obscura"  onclick="pielColor(this.value)">
+                                    <label for="obscura">Obscura</label>
+                                    <input type="radio" name="piel" id="mestizo" value="mestizo"  onclick="pielColor(this.value)">
+                                    <label for="mestizo">Mestizo</label>
+                                    <input type="radio" name="piel" id="indio" value="indio" onclick="pielColor(this.value)">
+                                    <label for="indio">Indio</label>
+                                </fieldset>
+                            </div>
+                            <div data-role="collapsible">
+                                <legend>Contextura: <span id="lcontextura"></span></legend>
+                                <fieldset data-role="controlgroup">
+                                    <input type="radio" name="contextura" id="delgado" value="delgado" onclick="contexturas(this.value)">
+                                    <label for="delgado">Delgado</label>
+                                    <input type="radio" name="contextura" id="fornido" value="fornido" onclick="contexturas(this.value)">
+                                    <label for="fornido">Fornido</label>
+                                    <input type="radio" name="contextura" id="gordo" value="gordo" onclick="contexturas(this.value)">
+                                    <label for="gordo">Gordo</label>
+                                    <input type="radio" name="contextura" id="obeso" value="obeso" onclick="contexturas(this.value)">
+                                    <label for="obeso">Obeso</label>
+                                </fieldset>
+                            </div>
+                            <div data-role="collapsible">
+                                <legend>Color de pelo: <span id="lpelo"></span></legend>
+                                <fieldset data-role="controlgroup" data-theme="a" data-iconpos="right">
+                                    <input type="radio" name="pelo" id="negro" value="negro" checked="checked" onclick="colorPelo(this.value)">
+                                    <label for="negro">Negro</label>
+                                    <input type="radio" name="pelo" id="cafe" value="cafe" onclick="colorPelo(this.value)">
+                                    <label for="cafe">Café</label>
+                                    <input type="radio" name="pelo" id="castaño" value="castaño" onclick="colorPelo(this.value)">
+                                    <label for="castaño">Castaño</label>
+                                    <input type="radio" name="pelo" id="rubio" value="rubio" onclick="colorPelo(this.value)">
+                                    <label for="rubio">Rubio</label>
+                                    <input type="radio" name="pelo" id="canoso" value="canoso" onclick="colorPelo(this.value)">
+                                    <label for="canoso">Canoso</label>
+                                </fieldset>
+                            </div>
+                            <div data-role="collapsible">
+                                <legend>Color de ojos: <span id="lojos"></span></legend>
+                                <fieldset data-role="controlgroup" data-theme="b">
+                                    <input type="radio" name="ojos" id="negros" value="negros" checked="checked" onclick="colorOjos(this.value)">
+                                    <label for="negros">Negros</label>
+                                    <input type="radio" name="ojos" id="cafes" value="cafes" onclick="colorOjos(this.value)">
+                                    <label for="cafes">Cafes</label>
+                                    <input type="radio" name="ojos" id="azules" value="azules" onclick="colorOjos(this.value)">
+                                    <label for="azules">Azules</label>
+                                    <input type="radio" name="ojos" id="verdes" value="verdes" onclick="colorOjos(this.value)">
+                                    <label for="verdes">Verdes</label>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </form>
+                    <label for="observacionesEstadoFisico">Observaciones</label>
+                    <textarea id="observacionesEstadoFisico" rows="5"></textarea>  
+                </div>                               
+            </div>
+        </div>
+        <div data-role="footer"  data-position='fixed' class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <button data-role="button" id="guardarConyugue"><img src="images/pantaleon36.png" /></button>
+            <label id="msjConyugue">Mensaje: </label>
+        </div>
+    </div>
+    <!--    Participantes   -->
+    <div data-role="page" id="participante" data-name="Participante" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div data-role="header"  data-position='fixed'>
+            <div class="col-xs-12" >
+	            <span class="col-xs-2" align="center">
+	                <!--<a href="#" data-rel="back" data-role="button" id="regresar" style="vertical-align:middle;margin-top:15px;">Regresar</a>-->
+	            </span>
+	            <span class="col-xs-8" align="center">
+	                <img src="images/imix_forms4.png" style="vertical-align:middle;margin-top:10px;"/>
+	            </span>
+	            <span class="col-xs-2" align="center">
+	            </span>
+	        </div>
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#inicio" data-icon="home">Inicio</a></li>
+                    <li><a href="#acceso" data-icon="arrow-r">Acceso</a></li>
+                    <li><a href="#menu" data-icon="arrow-r">Men&uacute;</a></li>
+                    <li><a href="#" class="ui-btn-active" data-icon="arrow-r">Participante</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container-fluid col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 panelPage" >
+                <div align="left" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 altoBox">
+                <div class="row col-xs-12 col-sm-12">
+                    <label for="fotoParticipante">Participante</label><br><br>
+                    <!--<div align="center" id="fotoParticipante" style="width:100%; height:185px;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <span><img src="images/pantaleon48.png" width="150px"/></span>
+                    </div>
+                    <label for="nombreimagenParticipante">Nombre Imagen</label>
+                    <input data-type="text" id="nombreimagenParticipante" style="display:none"/>-->
+                    <label for="idParticipante">Id</label>
+                    <input value=0 type="number" data-clear-btn="true" disabled="disabled" id="idParticipante"/>
+                    <label for="relacionParticipante">Grupo</label>
+                    <select id="grupoParticipante" align="left">
+                    </select>
+                    <label for="nombreParticipante">Nombre</label>
+                    <input data-type="text" id="nombreParticipante"/>   
+                    <label for="apellidoParticipante">Apellido</label>
+                    <input data-type="text" id="apellidoParticipante"/>                 
+                </div>
+                </div>
+                <div align="left" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 altoBox">  
+                <div class="row col-xs-12 col-sm-12">
+                    <label for="generoParticipante">Genero</label>
+                    <select id="generoParticipante" align="left">
+                        <option val="Masculino">Masculino</option>
+                        <option val="Femenino">Femenino</option>
+                    </select>
+                    <label for="identidadParticipante">Identidad</label>
+                    <input data-type="text" id="identidadParticipante"/>
+                    <label for="fechanacimientoParticipante">Fecha de nacimiento</label>
+                    <input type="date" data-clear-btn="true" name="date-1" id="fechanacimientoParticipante" value="">
+                    <label for="nacionalidadParticipante">Nacionalidad</label>
+                    <input data-type="text" id="nacionalidadParticipante"/> 
+                    <label for="telefonoParticipante">Tel&eacute;fono</label>
+                    <input data-type="text" id="telefonoParticipante"/> 
+                    <label for="emailParticipante">Email</label>
+                    <input type="email" data-clear-btn="true" name="email-1" id="emailParticipante" value="">
+                </div>
+                </div>
+                
+                <div align="left" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 altoBox">
+                <div class="row col-xs-12 col-sm-12">
+                    <label for="direccionParticipante">Direcci&oacute;n</label>
+                    <textarea id="direccionParticipante"></textarea>
+                    <label for="estadocivilParticipante">Estado civil</label>
+                    <select id="estadocivilParticipante" align="left">
+                        <option val="Casada(o)">Casada(o)</option>
+                        <option val="Soltera(o)">Soltera(o)</option>
+                        <option val="Union libre">Uni&oacute;n libre</option>
+                        <option val="Divorciada(o)">Divorciada(o)</option>
+                        <option val="Viuda(o)">Viuda(o)</option>
+                    </select>
+                    <label for="observacionesParticipante">Observaciones</label>
+                    <textarea id="observacionesParticipante"></textarea>
+                </div>
+                </div>
+                <div align="left" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 altoBox">                    
+                    <div class="row col-xs-12 col-sm-12" style="background-color:#3388cc; border-radius:20px;">
+                        <div align="left" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                            <label for="estadofisicoParticipante" style="color:#fff">Estado f&iacute;sico</label>
+                            <input data-type="text" id="estadofisicoParticipante"/>
+                        </div>
+                        <div align="left" class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <a href="#estadoFisico" data-type="button" data-role="button"><img src="images/pantaleon36.png" /></a>
+                        </div>
+                        <!--<div align="left" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                            <label for="conyugueParticipante" style="color:#fff">Conyugue</label>
+                            <input data-type="text" id="conyugueParticipante"/>
+                        </div>
+                        <div align="left" class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <a href="#conyugue" data-type="button" data-role="button"><img src="images/pantaleon36.png" /></a>
+                        </div>
+                        <div align="left" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                            <label for="desendientesParticipante" style="color:#fff">Desendientes</label>
+                            <input data-type="text" id="desendientesParticipante"/>
+                        </div>
+                        <div align="left" class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <a href="#desendientes" data-type="button" data-role="button"><img src="images/pantaleon36.png" /></a>
+                        </div> 
+                        <div align="left" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                            <label for="grupoParticipante" style="color:#fff">Grupo</label>
+                            <input data-type="text" id="grupoParticipante"/>
+                        </div>
+                        <div align="left" class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <a href="#grupos" data-type="button" data-role="button"><img src="images/pantaleon36.png" /></a>
+                        </div>-->
+                    </div>
+                </div>                             
+            </div>
+        </div>
+        <div data-role="footer"  data-position='fixed'>
+            <div align="left" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 altoBox">
+                <div align="center" class="row col-xs-3 col-sm-3">
+                    <a href="#" id="descargarParticipante" data-type="button" data-role="button" class="btnPart">Descargar <!--<img src="images/pantaleon36.png" />--></a>
+                </div>
+                <div align="center" class="row col-xs-3 col-sm-3">
+                    <a href="#" id="guardarParticipante" data-type="button" data-role="button" class="btnPart">Guardar <!--<img src="images/pantaleon36.png" />--></a>
+                </div>
+                <div align="center" class="row col-xs-3 col-sm-3">
+                    <a href="#" id="nuevoParticipante" data-type="button" data-role="button" class="btnPart">Nuevo <!--<img src="images/pantaleon36.png" />--></a>
+                </div>
+                <div align="center" class="row col-xs-3 col-sm-3">
+                    <a href="#listaParticipantes" data-type="button" data-role="button" class="btnPart">Lista <!--<img src="images/pantaleon36.png" />--></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div data-role="page" id="chat" data-name="chat">
+        <div data-role="header"  data-position='fixed'>
+            <div class="col-xs-12" >
+	            <span class="col-xs-2" align="center">
+	                <!--<a href="#" data-rel="back" data-role="button" id="regresar" style="vertical-align:middle;margin-top:15px;">Regresar</a>-->
+	            </span>
+	            <span class="col-xs-8" align="center">
+	                <img src="images/imix_forms4.png" style="vertical-align:middle;margin-top:10px;"/>
+	            </span>
+	            <span class="col-xs-2" align="center">
+	            </span>
+	        </div>
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#menu" data-icon="arrow-r">Menú</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container-fluid" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="row" style="height:100%;">
+                <div align="left" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="/*margin-top:35px;*/ height:100%;">
+                    <!-- ************************ inicio chat ***************************-->
+                    <style id="dynamic-styles"></style>
+                    <!--**************************inicio chat*************************-->
+                    <div id="hangout">  
+                        <div id="head" class="style-bg col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding:0px 0px 0px 0px;" align="center">                      
+	                       	<div class="mdi mdi-fullscreen col-xs-2 col-sm-2 col-md-2 col-lg-2"></div> 
+	                        <div class= "col-xs-10 col-sm-10 col-md-10 col-lg-10 texto-tu-yo" style="padding:0px 0px 0px 0px;" align="center">
+	                        	<!--<div class= "col-xs-12 col-sm12 col-md-12 col-lg-12">-->
+		                        	<!--<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10" style="padding: 0px 0px 0px 0px; font-size: 12px; height:100%; margin-top: -5px;">-->
+			                        	<div id="me_yo"class="col-lg-6 col-md-6 col-sm-6 col-xs-6" align="left" style="display: inline-block">
+		                            		<!--<img id= "yo" src="images/chat/imix-36.png" style="margin-right:3px;">-->
+                                            <a id= "yo" href="#" class="ui-icon-gear ui-btn-icon-left"><h1 id="me_name" class="me_name">IMIX-DIGITAL</h1></a>	
+		                            	</div>
+		                            	<div id="you_tu" class="col-lg-6 col-md-6 col-sm-6 col-xs-6" align="left" style="display: inline-block">
+		                            		<!--<div id= "you" class="you"> </div>-->
+		                            		<!--<img id= "you" class="you" src="<?php echo base_url(); ?>themes/default/images/icons/32/rounded-32.png" style="margin-right:3px;">-->
+                                            <a id= "you" href="#" class="ui-icon-user ui-btn-icon-left" ><h1 id="you_name" class="you_name">VISITANTE</h1></a>
+		                            		
+		                            	</div>
+	                            		<!--<i class="mdi mdi-chevron-down"></i>-->
+	                            	<!--</div> 	-->  
+	                            	<!--<i class="mdi mdi-arrow-left"></i> -->
+	                            <!--</div>-->
+                            </div>
+                            <div class="mdi mdi-arrow-left col-xs-2 col-sm-2 col-md-2 col-lg-2"><a href="#" class="ui-icon-user ui-btn-icon-left"></a></div>
+                            <!--<div class="mdi mdi-arrow-left col-xs-2 col-sm-2 col-md-2 col-lg-2"> </div>	-->
+                            <div class="mdi mdi-menu col-xs-2 col-sm-2 col-md-2 col-lg-2"><a href="#" class="ui-icon-gear ui-btn-icon-left"></a></div>
+                            <!--<div class="mdi mdi-menu col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>-->     
+                        </div>  
+                        <div id="content">
+                            <div class="overlay"></div>
+
+                            <div id="floater-position">
+                                <div id="add-contact-floater" class="floater control style-bg hidden"><i class="mdi mdi-plus"></i></div>          
+                                <div id="chat-floater" class="floater control style-bg hidden"><i class="mdi mdi-comment-text-outline"></i></div>   
+                            </div>
+                            
+                            <div class="card menu">
+                                <div class="header">
+                                    <img src="https://s8.postimg.org/76bg2es2t/index.png" />
+                                    <h3 class="me_names">Imix DIgital</h3>
+                                </div>
+                                <div class="content">
+                                    <div style="height:400px;">
+                                        <div class="i-group">
+                                            <input type="text" id="username" placeholder="Nombre usuario" required style="display:none"><!--<span class="bar"></span>-->
+                                        </div> 
+                                        <div class="i-group">
+                                            <input id="clave_acceso" type="password" placeholder="Clave" required  style="display:none"><!--<span class="bar"></span>-->
+                                        </div>
+                                        <br/>
+                                        <div class="center"><canvas id="colorpick" width="250" height="220" ></canvas></div> 
+                                    </div> 
+                                </div>
+                            </div>
+                            
+                            <div class="list-account">
+                                <div class="meta-bar"><input class="nostyle glyphicon-search" type="text" placeholder="Buscar" /></div>
+                                <ul id="lista_usuarios0" class="list mat-ripple">     
+                                    <!--<li class="userLink chat Nancho" data-link="nancho"><img src="./images/chat/imix-36.png">
+                                        <div class="content-container">
+                                            <span class="name">'Nancho</span>
+                                            <span class="phone">Hernan Guevara</span>
+                                            <span class="meta">Programador</span>
+                                        </div>
+                                        <span class="time">
+                                            14/12/1970
+                                        </span>
+                                    </li>-->
+                                </ul> 
+                            </div>
+                            <div class="list-text">
+                            <div id="saludo_bienvenida" align="center"></div>
+                                <ul id="lista_usuarios1"class="list mat-ripple">      
+                                    <li><img src="">
+                                        <div class="content-container">
+                                            <span class="name">IMIXDIGITAL</span>
+                                            <span class="txt">(504) 2243-5127 </span>
+                                        </div>
+                                        <span class="time">
+                                            14:00
+                                        </span>
+                                    </li>    
+                                </ul> 
+                                <!--<button class="registrar_show button-chat">Registrar</button>-->
+                            </div>
+                            <div class="list-phone" display="none">
+                                <div class="meta-bar">
+                                    <input class="nostyle search-filter" type="text" placeholder="Nombre, Número de teléfono" />
+                                </div>
+                                <ul id="telefonos_usuarios" class="list mat-ripple">      
+                                    <!--<li><img src="">
+                                        <div class="content-container">
+                                            <span class="name">Imix DIgital</span>
+                                            <span class="phone">(504) 2243-5127</span>
+                                            <span class="meta">Oficina</span>
+                                        </div>
+                                        <span class="time">
+                                            2017-01-01 03:35
+                                        </span>
+                                    </li> --> 
+                                </ul> 
+                            </div>
+                            <div class="list-chat">
+                                <ul id="contenido_chat" class="chat">
+                                    
+                                </ul>
+                                <div class="meta-bar chat col-xs-12 col-sm-12 col-md-12 col-lg-12 " >
+                                	<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                    	<input class="nostyle chat-input" type="text" placeholder="Mensaje..." /> 
+                                    </div>
+                                    <div class="div-mdi-send col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                        <img src="images/chat/send0.png" />
+                                    	<!--<i class="mdi mdi-send"></i>-->
+                                        <!--<a href="#" class="ui-icon-comment ui-btn-icon-left"></a>-->
+                                    </div>
+                                    <!--<div class="div-mdi-send col-xs-3 col-sm-3 col-md-2 col-lg-2">
+                                    	<button class="show_hide1 button-chat">Ocultar</button>
+                                    </div>-->
+                                </div>
+                            </div>
+                            <ul class="nav control mat-ripple tiny">
+                                <li data-route=".list-account" style="width:30%"><a href="#" class="ui-icon-user ui-btn-icon-left nan"></a><!--<i class="mdi mdi-account-multiple"></i>--></li>
+                                <li data-route=".list-text" style="width:30%"><a href="#" class="ui-icon-comment ui-btn-icon-left nan"></a><!--<i class="mdi mdi-comment-text"></i>--></li>
+                                <li data-route=".list-phone" style="width:30%"><a href="#" class="ui-icon-phone ui-btn-icon-left nan"></a><!--<i class="mdi mdi-phone"></i>--></li>
+                            </ul>
+                        </div>  
+                        <div id="contact-modal" data-mode="add" class="card dialog">
+                            <h3>Agregar contacto</h3>
+                            <div class="i-group">
+                                <input type="text" id="new-user"><span class="bar"></span>
+                                <label>Name</label>
+                            </div>
+                            <div class="btn-container">
+                                <span class="btn cancel">Cancel</span>
+                                <span class="btn save">Save</span>      
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ************************ fin chat ***************************-->
+                </div>
+            </div>   
+        </div>
+    </div>
+    <div data-role="page" id="nota" data-name = "nota">
+        <div data-role="header"  data-position='fixed'>
+            <h1 class="tituloImix">IMIX DIGITAL</h1>
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#info" data-icon="home">Inicio</a></li>
+                    <li><a href="#acceso" data-icon="arrow-r">Acceso</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="note col-xs-12 col-md-12 col-lg-12" id="notaConsulta">
+
+                 </div> 
+            </div>
+        </div>
+    </div>
+    <div data-role="page" id="listaParticipantes" data-name = "listaParticipantes">
+        <div data-role="header"  data-position='fixed'>
+            <h1 class="tituloImix">IMIX DIGITAL</h1>
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#info" data-icon="home">Inicio</a></li>
+                    <li><a href="#menu" data-icon="arrow-r">Menu</a></li>
+                </ul>
+            </div>
+        </div>
+        <div data-role="main" id="body-participantes" class="container-fluid" style="height:100%">
+            <!--<div class="row" style="height:100%">-->
+                <div class="note col-xs-12 col-md-12 col-lg-12 lista_Participantes" id="lista_Participantes">
+                    <ul id="participantesRegistrados" class="list mat-ripple lista"><li><a>No hay participantes</a></li></ul>
+                 </div> 
+            <!--</div>-->
+        </div>
+        <div data-role="footer"  data-position='fixed'>
+            <div align="left" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 altoBox">
+                <div align="left" class="row col-xs-8 col-sm-8">
+                    <div class="meta-bar">
+                        <label for="buscarParticipante">Buscar...</label>
+                        <input id="buscarParticipante" class="search-filter-participantes" type="text" placeholder="Nombre, numero teléfono" />
+                    </div>
+                </div>
+                <div align="center" class="row col-xs-4 col-sm-4">
+                    <a href="#participante" id="editarParticipante" data-type="button" data-role="button">Editar<img src="images/pantaleon36.png" /></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div data-role="page" id="listaNotasCategorias" data-name = "listaNotasCategorias">
+        <div data-role="header"  data-position='fixed' id="header-notaCategorias">
+            <h1 class="tituloImix categoria">IMIX DIGITAL</h1>
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#info" data-icon="home">Inicio</a></li>
+                    <li><a href="#menu" data-icon="arrow-r">Menu</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="note col-xs-12 col-md-12 col-lg-12">
+                    <div id="notaCategoria"></div>
+                 </div> 
+            </div>
+        </div>
+    </div>
+    
+    <div data-role="page" id="listaGrupos" data-name = "listaGrupos">
+	    <div data-role="panel" id="myPanelFixed" data-position-fixed="true"> 
+	        <h3>Administracion de<br> Grupos</h3>
+	        <a href="#listaGrupos" data-role="button" data-rel="close" class="ui-btn ui-btn-inline ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left">Cerrar</a>
+            <div align="left" class="col-xs-12 col-sm-12 altoBox">                    
+                <div class="row col-xs-12 col-sm-12" style="background-color:#3388cc; border-radius:20px;">
+                    <div align="left" class="col-xs-4 col-sm-4 col-md-8 col-lg-4">
+                        <label for="idGrupo" style="color:#fff">ID</label>
+                        <input value = "0" data-type="number" id="idGrupo" readonly/>
+                    </div>
+                    <div align="left" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                        <label for="nombreGrupo" style="color:#fff">Nombre</label>
+                        <input data-type="text" id="nombreGrupo"/>
+                    </div>
+                </div>
+                <div align="left" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <a href="#" style="width:100%" data-role="button" id="btnGuardarGrupo"class="ui-btn ui-btn-inline ui-shadow ui-corner-all ui-btn-a ui-icon-check ui-btn-icon-left">Guardar</a>
+                </div>
+                <div align="left" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <a href="#" style="width:100%" data-role="button" id="btnBorrarGrupo" class="ui-btn ui-btn-inline ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left">Borrar</a>
+                </div>
+            </div>            
+	    </div>
+        
+        <div data-role="header"  data-position='fixed' id="header-grupos">
+            <h1 class="tituloImix grupo">IMIX DIGITAL</h1>
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#info" data-icon="home">Inicio</a></li>
+                    <li><a href="#menu" data-icon="arrow-r">Menu</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div data-role="main" class="container-fluid page-body">
+            <div class="row row-body">
+                <div class="note col-xs-12 col-md-12 col-lg-12">
+                    <ul id="listaGrupo" class="list mat-ripple lista">
+                        <li id="" class="userLink">
+                            <div class="content-container">
+                            </div>
+                        </li>
+                    </ul>
+                 </div> 
+            </div>
+        </div>
+        
+        <div data-role="footer"  data-position='fixed'>
+            <!--<div align="left" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 altoBox">-->
+                 <a href="#myPanelFixed" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Admin Grupos</a>
+            <!--</div>-->
+        </div>
+    </div>
+  </body>
+</html>
