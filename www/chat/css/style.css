@@ -376,7 +376,7 @@ canvas {
 .list-chat .meta-bar {
   border-bottom: 1px solid #7daefe;
   padding: 0 0 0 5px;
-  height: 40px;
+  height: 60px;
   position: relative;
   width: 100%;
   background-color: white;
@@ -418,7 +418,7 @@ ul.chat {
   position: relative;
   float:left;
 }
-#hangout ul.chat li img {
+#hangout ul.chat li img.good-bad {
   height: 42px;
   width: 42px;
   border-radius: 100%;
@@ -721,4 +721,57 @@ body {
 }
 .texto-tu-yo{
     margin-top: -10px;
+}
+
+#com{
+	/*margin: -30px 0px 0px 17px;*/
+	margin: -35px 0px 0px -27px;
+    font-size: 0.7em;
+    font-weight: 700;
+    padding-top: 10px;
+    float: left;
+}
+.panel-footing{
+	float:left;
+	padding-top:60px;
+	border-top: 1px !important;
+	border-top-color: #2f1be4;
+}
+#hangout ul.chat li.right {
+     right: 0px; 
+}
+.comentario-title{
+	margin: -15px 0px 0px 30px;
+    float: left;
+}
+.approve{
+	margin-right: 0px;
+    float: right;
+    margin-top: -35px;
+}
+.unapprove{
+	margin-right: 40px;
+    float: right;
+    margin-top: -35px;
+}
+.img-com{
+	margin-left: 0px;
+    float: left;
+    margin-top: -35px;
+    width:42px;
+}
+#approve-com{
+	margin: -25px -30px 0px 0px;
+    font-size: 0.7em;
+    font-weight: 700;
+    padding-top: 10px;
+    float: right;
+}
+#unapprove-com{
+	margin: -36px 57px 0px 0px;
+    font-size: 0.7em;
+    font-weight: 700;
+    padding-top: 10px;
+    float: right;
+    color:red;
 }
