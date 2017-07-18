@@ -3,6 +3,13 @@
 /*           Hernan Guevara              */
 /*            IMIX DIGITAL               */
 /*****************************************/
+    function comentarios(value){
+		var id = value.substring(12);
+		document.getElementById("coment-content").innerHTML=parseInt(id);	
+		if(id!=0){
+			document.location.href = "#dialog"; 
+		}		  
+	}
     function toPies() {
         var toPies1 = 0;
             toPies1 = $("#alturaMetros").val() * 3.2808;
