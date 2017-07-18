@@ -418,7 +418,7 @@ ul.chat {
   position: relative;
   float:left;
 }
-#hangout ul.chat li img.good-bad {
+#hangout ul.chat li img {
   height: 42px;
   width: 42px;
   border-radius: 100%;
@@ -737,8 +737,10 @@ body {
 	border-top: 1px !important;
 	border-top-color: #2f1be4;
 }
-#hangout ul.chat li.right {
-     right: 0px; 
+.panel-footing img.good-bad {
+  height: 42px;
+  width: 42px;
+  border-radius: 100%;
 }
 .comentario-title{
 	margin: -15px 0px 0px 30px;
