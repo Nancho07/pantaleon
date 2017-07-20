@@ -777,3 +777,245 @@ body {
     float: right;
     color:red;
 }
+/***********************************************************************************************/
+.hangout {
+	width: 100% !important;
+	height: 100% !important;
+}
+.hangout {
+  background-color: white;
+  /*height: 635px;
+  width: 900px;*/
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  transition: all 0.444s cubic-bezier(0.7, 0, 0.3, 1);
+  overflow: hidden;
+  margin: auto;
+  position: absolute;
+  top: 0px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+      position: relative;
+}
+.hangout.collapsed {
+  height: 55px;
+  box-shadow: none;
+}
+.hangout.collapsed #content {
+  opacity: 0;
+  height: 0;
+}
+.hangout.collapsed .control.floater {
+  transform: scale(0) rotate(90deg);
+  opacity: 0;
+}
+.hangout.collapsed .control.nav {
+  height: 0;
+  opacity: 0;
+}
+
+.hangout ul.chat li {
+  padding: 15px 25px 15px 25px;
+  display: inline-flex;
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  transition: all 0.18s ease-in;
+  position: relative;
+}
+.hangout ul.chat li.right {
+  padding: 15px 25px 15px 25px;
+  display: inline-flex;
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  transition: all 0.18s ease-in;
+  position: relative;
+  float:left;
+}
+.hangout ul.chat li img.good-bad {
+  height: 42px;
+  width: 42px;
+  border-radius: 100%;
+}
+.hangout ul.chat li .message {
+  padding: 10px 10px 10px 20px;
+  font-size: 0.9em;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  min-width: 50%;
+  position: relative;
+  background: white;
+  border-radius: 5px;
+}
+.hangout ul.chat li.message:after {
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-width: 8px 8px 8px 0;
+  border-color: transparent white;
+  display: block;
+  width: 0;
+  z-index: 1;
+  left: -8px;
+  top: 3px;
+}
+.hangout ul.chat li.right(even){
+  flex-direction: row-reverse;
+}
+/*#hangout ul.chat li:nth-child(even) .message {*/
+.hangout ul.chat li.right .message {
+  background-color: #f5f5f5;
+}
+.hangout ul.chat li.right {
+  right: -100px;
+}
+/*#hangout ul.chat li:nth-child(even) .message:after {*/
+.hangout ul.chat li.right .message:after {
+  right: -8px;
+  left: auto;
+  border-width: 8px 0 8px 8px;
+  border-color: transparent #f5f5f5;
+}
+.hangout ul.list {
+  width: 100%;
+  padding-bottom: 130px;
+}
+.hangout ul.list li {
+  cursor: pointer;
+  padding: 15px 25px 15px 25px;
+  display: inline-flex;
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  transition: all 0.18s ease-in;
+  position: relative;
+  overflow: hidden;
+  /*background-color: rgba(0, 0, 0, 0.36);*/
+}
+.hangout ul.list li.context {
+  box-shadow: inset -1px 20px 4px -14px rgba(50, 50, 50, 0.3);
+  color: white;
+  animation: anim-context 0.35s 1 ease-out;
+  overflow: hidden;
+  animation-fill-mode: forwards;
+}
+.hangout ul.list li.context i {
+  opacity: 0.5;
+  font-size: 1.2em;
+  margin-right: 20px;
+  transition: opacity 0.3s ease-out;
+}
+.hangout ul.list li.context i:hover {
+  opacity: 1;
+}
+.hangout ul.list li.active {
+  background: #f4f4f4;
+}
+.hangout ul.list li.active > .mdi-menu-down {
+  opacity: 1;
+}
+.hangout ul.list li:hover {
+  background: #f4f4f4;
+}
+.hangout ul.list li:hover > .mdi-menu-down {
+  opacity: 1;
+}
+.hangout ul.list li img {
+  height: 42px;
+  width: 42px;
+  border-radius: 100%;
+}
+ .hangout ul.list li .name {
+  font-weight: bold;
+  padding: 10px 0 10px 20px;
+  display: flex;
+  justify-content: space-between;
+}
+ .hangout ul.list li .content-container .name {
+  font-weight: bold;
+  padding: 0 0 0 20px;
+  font-size: 1em;
+}
+ .hangout ul.list li .content-container .phone {
+  padding: 0 0 0 20px;
+  font-size: 0.8em;
+  display: block;
+  margin-bottom: -4px;
+}
+ .hangout ul.list li .content-container .txt {
+  padding: 0 0 0 20px;
+  font-size: 0.9em;
+}
+ .hangout ul.list li .content-container .meta {
+  font-size: 0.7em;
+  padding: 0 0 0 20px;
+  color: #999;
+}
+ .hangout ul.list li .time {
+  font-size: 0.8em;
+  margin: 13px 0 0 auto;
+}
+ .hangout ul.list li .mdi-menu-down {
+  font-size: 1.5em;
+  color: #676767;
+  opacity: 0;
+  transition: opacity 0.15s ease-out;
+  margin: 10px 0 0 auto;
+}
+ .hangout ul.nav {
+  position: absolute;
+  list-style-type: none;
+  width: 100%;
+  height: 50px;
+  border-top: 1px solid #eceded;
+  background-color: white;
+  z-index: 10;
+  bottom: 0;
+  transition: all 0.333s ease-in-out;
+}
+ .hangout ul.nav li.active:after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 10px;
+  margin: 0 auto;
+  background-color: white;
+  margin-top: 6px;
+  animation: navgrow 0.222s 1 ease-in;
+  animation-fill-mode: forwards;
+}
+ .hangout ul.nav li {
+  height: 50px;
+  overflow: hidden;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  font-size: 1.4em;
+  color: #676767;
+  cursor: pointer;
+  padding: 10px 0 10px 0;
+  transition: all 0.18s ease-in;
+  position: relative;
+}
+.hangout ul.nav li:hover {
+  background: #f4f4f4;
+}
+
+.hangout ul.chat li.right {
+     right: 0px; 
+}
+.hangout .mdi-chevron-down,
+.hangout .mdi-chevron-up {
+  margin: 0 15px 0 auto;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+.hangout .mdi-chevron-down,
+  .mdi-chevron-up,
+  .mdi-fullscreen,
+  .mdi-fullscreen-exit {
+    display: none;
+  }
