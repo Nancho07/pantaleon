@@ -2623,11 +2623,11 @@ function onAppReady() {
     	//console.log("Hernan E. Guevara");
         if ($('#coment-todos-all').hasClass('collapsed')) {
             $(".hangout").removeClass('hangout mdi-chevron-up').addClass('hangout mdi-chevron-down');
-            $('#coment-todos-all').removeClass('panel-footing collapsed').addClass('panel-footing');
+            $('#coment-todos-all').removeClass('panel-footing collapsed col-xs-12').addClass('panel-footing col-xs-12');
 
         } else {
             $(".hangout").removeClass('hangout mdi-chevron-down').addClass('hangout mdi-chevron-up');
-            $('#coment-todos-all').removeClass('panel-footing').addClass('panel-footing collapsed');
+            $('#coment-todos-all').removeClass('panel-footing col-xs-12').addClass('panel-footing collapsed col-xs-12');
             //$('.hangout').toggleClass('open');
         }
 	}                            
