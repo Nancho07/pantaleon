@@ -2599,6 +2599,37 @@ function onAppReady() {
             logs();
         });
     });
-                                
+    function sendMessage(value,comment){
+    	var message = {};
+        var id_nota = value;
+        var comentario = $('#comentario_'+value).val();
+        if(comentario!=""){
+			message.id_nota=id_nota;
+        	message.comentario=comentario;
+        	message.fecha=new Date();
+        	datos_usuario.message=message;
+        	socket.emit('sendMessage',datos_usuario);
+        	$('#comentario_'+value).val("");		
+		}else{
+			alertas.contenido="No hay mensaje";
+            alertas.btnConfirma="No";
+            alertas.funcionConfirma="";
+            alertas.funcionCancela="";
+            alerta(alertas);
+		}
+        
+    }
+    function desplegar_message(){
+    	//console.log("Hernan E. Guevara");
+        if ($('#coment-todos-all').hasClass('collapsed')) {
+            $(".hangout").removeClass('hangout mdi-chevron-up').addClass('hangout mdi-chevron-down');
+            $('#coment-todos-all').removeClass('panel-footing collapsed').addClass('panel-footing');
+
+        } else {
+            $(".hangout").removeClass('hangout mdi-chevron-down').addClass('hangout mdi-chevron-up');
+            $('#coment-todos-all').removeClass('panel-footing').addClass('panel-footing collapsed');
+            //$('.hangout').toggleClass('open');
+        }
+	}                            
 }
 document.addEventListener("app.Ready", onAppReady, false);
