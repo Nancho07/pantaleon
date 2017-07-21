@@ -2148,7 +2148,7 @@ function onAppReady() {
     socket.on("notaConsultada",function(datos){
         $("#notaConsulta").append(datos.nota);
         $("#coment-todos-ul_"+datos_usuario.notaId).empty();
-        socket.emit(sendComentarios,datos_usuario); 
+        socket.emit("sendComentarios",datos_usuario); 
     });
     socket.on('setParticipantes',function(datos){
         db.transaction(function(tx) {
