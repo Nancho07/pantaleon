@@ -2215,7 +2215,40 @@ function onAppReady() {
         });
         actualizarGrupos();
     });
-    //});
+    socket.on('reciveMessage',function(value){      
+       var respuUl = '<li class="right">'+						                   
+                     '<div class="panel panel-default ">'+
+                          '<div class="panel-heading" style="background-color:green;">'+	
+                            '<h4 class="panel-title ">'+
+                              '<a data-toggle="collapse" data-parent="#accordion" href="#collapse'+value.usuario+'" style="color:blue; text-shadow:none;">'+value.fecha+'</a>'+
+                            '</h4>'+
+                          '</div>'+
+                          '<div >'+/*-id="collapse1" class="panel-collapse collapse in"*/
+                              '<div class="note">'+
+                              value.comentario+
+                              '</div>'+                         
+                          '</div>'+
+                          '<div class="panel-footing" style="background-color:white;">'+	
+                        	'<div>'+
+                        		'<!--<a href="#" id="come_coment_'+value.coment_k+'" data-transition="pop" data-toggle="collapse" data-target="#demo">'+
+                    				'<img class="img-com" src="imagenes/comment2.png" width="50%"/>'+       
+                    				'<span class="com">25</span>'+                  				
+                    			'</a>'+
+                    			'<a href="#" id="come_approve_'+value.coment_k+'">'+
+                    				'<img class="approve good-bad" src="imagenes/approve.png"/>'+
+                    				'<span class="approve-com">25</span>'+
+                    			'</a>'+
+                    			'<a href="#" id="come_unapprove_'+value.coment_k+'">'+
+                    				'<span class="unapprove-com">25</span>'+
+                    				'<img class="unapprove good-bad" src="imagenes/unapprove0.png"/>'+
+                    			'</a>-->'+
+                        	'</div>'+
+                        	//respuDiv+
+                          '</div>'+
+                     '</div>'+
+                '</li>';
+                $("#coment-todos-ul_"+value.id_nota).append(respuUl);
+    });
     /*************  chat   **************************/
     $('.pushInfo').on('click', function() {        
         var scrollPos =  $("#nota3").offset().top;
