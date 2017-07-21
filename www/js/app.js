@@ -99,7 +99,7 @@
         if ($('#coment-todos-all').hasClass('collapsed')) {
             $(".hangout").removeClass('hangout mdi-chevron-up').addClass('hangout mdi-chevron-down');
             $('#coment-todos-all').removeClass('panel-footing collapsed col-xs-12').addClass('panel-footing col-xs-12');
-
+            socket.emit("sendComentarios",datos_usuario);
         } else {
             $(".hangout").removeClass('hangout mdi-chevron-down').addClass('hangout mdi-chevron-up');
             $('#coment-todos-all').removeClass('panel-footing col-xs-12').addClass('panel-footing collapsed col-xs-12');
@@ -2146,8 +2146,7 @@ function onAppReady() {
         
     });
     socket.on("notaConsultada",function(datos){
-        $("#notaConsulta").append(datos.nota);
-        socket.emit(sendComentarios,datos_usuario);
+        $("#notaConsulta").append(datos.nota);        
     });
     socket.on('setParticipantes',function(datos){
         db.transaction(function(tx) {
