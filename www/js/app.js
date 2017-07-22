@@ -2242,10 +2242,13 @@ function onAppReady(){
     });
     socket.on('reciveSentimiento',function(value){ 
         if(value.portada==="NO"){
-            $("#nota_approve_"+value.id_nota+" span").empty();
-            $("#nota_unapprove_"+value.id_nota+" span").empty();
-            $("#nota_approve_"+value.id_nota+" span").append(value.positivos);
-            $("#nota_unapprove_"+value.id_nota+" span").append(value.negativos);
+            var existe_nota = $("#nota_approve_"+value.id_nota);
+            if(existe_nota){
+                $("#nota_approve_"+value.id_nota+" span").empty();
+                $("#nota_unapprove_"+value.id_nota+" span").empty();
+                $("#nota_approve_"+value.id_nota+" span").append(value.positivos);
+                $("#nota_unapprove_"+value.id_nota+" span").append(value.negativos);
+            }
             var existe = $("#approve_"+value.id_nota);
             if(existe){
                 $("#approve_"+value.id_nota+" span").empty();
