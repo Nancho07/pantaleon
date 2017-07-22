@@ -2246,6 +2246,13 @@ function onAppReady(){
             $("#nota_unapprove_"+value.id_nota+" span").empty();
             $("#nota_approve_"+value.id_nota+" span").append(value.positivos);
             $("#nota_unapprove_"+value.id_nota+" span").append(value.negativos);
+            var existe = $("#approve_"+value.id_nota);
+            if(existe){
+                $("#approve_"+value.id_nota+" span").empty();
+                $("#unapprove_"+value.id_nota+" span").empty();
+                $("#approve_"+value.id_nota+" span").append(value.positivos);
+                $("#unapprove_"+value.id_nota+" span").append(value.negativos);
+            }
         }else if (value.portada==="SI"){
             $("#approve_"+value.id_nota+" span").empty();
             $("#unapprove_"+value.id_nota+" span").empty();
