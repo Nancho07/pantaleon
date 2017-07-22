@@ -108,17 +108,21 @@
 
     function voto_aprueba(value){
         var voto = {};
+        var fecha = new Date();
         var id_nota = value;
 			voto.id_nota=id_nota;
             voto.tipo = 1;
+            voto.fecha = fecha;
         	datos_usuario.voto=voto;
         	socket.emit('sendVoto',datos_usuario);		
     }
     function voto_desaprueba(value){
         var voto = {};
+        var fecha = new Date();
         var id_nota = value;
 			voto.id_nota=id_nota;
             voto.tipo = -1;
+            voto.fecha = fecha;
         	datos_usuario.voto=voto;
         	socket.emit('sendVoto',datos_usuario);		
     }
