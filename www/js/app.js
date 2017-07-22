@@ -2241,7 +2241,7 @@ function onAppReady(){
        $("#coment-todos-ul_"+value.id_nota).append(value.comentario);
     });
     socket.on('reciveSentimiento',function(value){ 
-        if(value.portada="NO"){
+        if(value.portada==="NO"){
             $("#nota_approve_"+value.id_nota+" span").empty();
             $("#nota_unapprove_"+value.id_nota+" span").empty();
             $("#nota_approve_"+value.id_nota+" span").append(value.positivos);
