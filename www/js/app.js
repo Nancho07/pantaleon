@@ -2240,6 +2240,19 @@ function onAppReady(){
     socket.on('reciveMessage',function(value){      
        $("#coment-todos-ul_"+value.id_nota).append(value.comentario);
     });
+    socket.on('reciveSentimiento',function(value){ 
+        if(value.portada="NO"){
+            $("#nota_approve_"+value.id_nota+" span").empty();
+            $("#nota_unapprove_"+value.id_nota+" span").empty();
+            $("#nota_approve_"+value.id_nota+" span").append(value.positivos);
+            $("#nota_unapprove_"+value.id_nota+" span").append(value.negativos);
+        else{
+            $("#approve_"+value.id_nota+" span").empty();
+            $("#unapprove_"+value.id_nota+" span").empty();
+            $("#approve_"+value.id_nota+" span").append(value.positivos);
+            $("#unapprove_"+value.id_nota+" span").append(value.negativos);
+        }
+    });
     /*************  chat   **************************/
     $('.pushInfo').on('click', function() {        
         var scrollPos =  $("#nota3").offset().top;
