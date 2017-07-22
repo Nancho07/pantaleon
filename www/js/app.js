@@ -91,21 +91,37 @@
             alertas.funcionConfirma="";
             alertas.funcionCancela="";
             alerta(alertas);
-		}
-        
+		}        
     }
     function desplegar_message(){
     	//console.log("Hernan E. Guevara");
         if ($('#coment-todos-all').hasClass('collapsed')) {
-            $(".hangout").removeClass('hangout mdi-chevron-up').addClass('hangout mdi-chevron-down');
+            $(".hangout").removeClass('hangout mdi-chevron-up col-xs-12').addClass('hangout mdi-chevron-down col-xs-12');
             $('#coment-todos-all').removeClass('panel-footing collapsed col-xs-12').addClass('panel-footing col-xs-12');
                        
         } else {
-            $(".hangout").removeClass('hangout mdi-chevron-down').addClass('hangout mdi-chevron-up');
+            $(".hangout").removeClass('hangout mdi-chevron-down col-xs-12').addClass('hangout mdi-chevron-up col-xs-12');
             $('#coment-todos-all').removeClass('panel-footing col-xs-12').addClass('panel-footing collapsed col-xs-12');
             //$('.hangout').toggleClass('open');
         }
 	}
+
+    function voto_aprueba(value){
+        var voto = {};
+        var id_nota = value;
+			voto.id_nota=id_nota;
+            voto.tipo = 1;
+        	datos_usuario.message=voto;
+        	socket.emit('sendVoto',datos_usuario);		
+    }
+    function voto_desaprueba(value){
+        var voto = {};
+        var id_nota = value;
+			voto.id_nota=id_nota;
+            voto.tipo = -1;
+        	datos_usuario.message=voto;
+        	socket.emit('sendVoto',datos_usuario);		
+    }
     $( document ).ready(function() {
 		var myHeight = window.innerHeight; 
 		var xh = $(".encabezado").height();
@@ -118,7 +134,7 @@
 document.addEventListener('deviceready', function () {    
 }, false);
 
-function onAppReady() {  
+function onAppReady(){  
     idDevice = device.uuid;
     datos_usuario.uuid=device.uuid;
     db = window.sqlitePlugin.openDatabase({
