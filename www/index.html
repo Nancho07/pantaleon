@@ -1080,8 +1080,8 @@
     <div data-role="page" id="nota" data-name = "nota">
         <div data-role="header"  data-position='fixed'>
             <div class="widget-container content-area horiz-area wrapping-col left col-xs-8">
-            	<span class="col-xs-12" align="center">
-                    <img src="images/pantaleon_mini.png" width="90%" style="vertical-align:left;"/>
+            	<span class="col-xs-12" align="left">
+                    <img src="images/pantaleon_mini.png" width="90%" style="vertical-align:middle;"/>
                 </span>
             </div>
             <!--<div class="widget-container wrapping-col single-centered col-xs-4"></div>-->
@@ -1199,6 +1199,32 @@
                  <a href="#myPanelFixed" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Admin Grupos</a>
             <!--</div>-->
         </div>
+    </div>
+    <div data-role="page" id="dialog" data-name="dialog" class="ui-content">
+        <div data-role="header"  data-position='fixed'>
+            <div class="col-xs-12" >
+	            <span class="col-xs-2" align="center"></span>
+	            <span class="col-xs-8" align="center">
+	                COMENTARIOS
+	            </span>
+	            <span class="col-xs-2" align="center"><a href="#" class="ui-btn" data-rel="back">Nota</a></span>
+	        </div>
+        </div>
+    	<div class="container-fluid" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    		<div id="coment-content"></div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="coment-inpunt">
+    			<div>
+    				<label for="comentario">Comentario</label>
+		        	<textarea id="comentario" rows="8" cols="100%" placeholder="Escribe tu comentario"></textarea>
+		        </div>
+		        <a href="#" class="ui-btn ui-btn-inline ui-corner-all col-xs-12 col-sm-12">
+			        <div align="center">	
+	                    <img src="images/chat/send0.png"/>
+                    </div>
+                </a>
+    		</div>
+    		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="coment-todos"></div>
+    	</div>
     </div>
   </body>
 </html>
