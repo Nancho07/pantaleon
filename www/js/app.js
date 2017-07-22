@@ -2246,7 +2246,7 @@ function onAppReady(){
             $("#nota_unapprove_"+value.id_nota+" span").empty();
             $("#nota_approve_"+value.id_nota+" span").append(value.positivos);
             $("#nota_unapprove_"+value.id_nota+" span").append(value.negativos);
-        else{
+        }else{
             $("#approve_"+value.id_nota+" span").empty();
             $("#unapprove_"+value.id_nota+" span").empty();
             $("#approve_"+value.id_nota+" span").append(value.positivos);
