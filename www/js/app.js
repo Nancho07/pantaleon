@@ -111,7 +111,7 @@
         var id_nota = value;
 			voto.id_nota=id_nota;
             voto.tipo = 1;
-        	datos_usuario.message=voto;
+        	datos_usuario.voto=voto;
         	socket.emit('sendVoto',datos_usuario);		
     }
     function voto_desaprueba(value){
@@ -119,7 +119,7 @@
         var id_nota = value;
 			voto.id_nota=id_nota;
             voto.tipo = -1;
-        	datos_usuario.message=voto;
+        	datos_usuario.voto=voto;
         	socket.emit('sendVoto',datos_usuario);		
     }
     $( document ).ready(function() {
