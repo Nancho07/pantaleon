@@ -21,8 +21,8 @@ var name = '',
     recargar,
     networkState;
     datos_usuario.prefix="rse",
-    datos_usuario.usuario="anonimo",
-    datos_usuario.id_tecnico="anonimo",
+    datos_usuario.usuario="Anonimo",
+    datos_usuario.id_tecnico="Anonimo",
     alertas={};
     $.getJSON("http://freegeoip.net/json/", function (data) {
 		 datos_usuario.country = data.country_name;
