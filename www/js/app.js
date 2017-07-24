@@ -2269,6 +2269,18 @@ function onAppReady(){
             alerta(alertas);
         }
     });
+    socket.on('reciveComentarios',function(value){ 
+        var existe_nota = $("#nota_coment_"+value.id_nota);
+        if(existe_nota){
+            $("#nota_coment_"+value.id_nota+" span").empty();
+            $("#nota_coment_"+value.id_nota+" span").append(value.cantidad);
+        }
+        var existe_nota = $("#coment_"+value.id_nota);
+        if(existe_nota){
+            $("#coment_"+value.id_nota+" span").empty();
+            $("#coment_"+value.id_nota+" span").append(value.cantidad);
+        }
+    });
     /*************  chat   **************************/
     $('.pushInfo').on('click', function() {        
         var scrollPos =  $("#nota3").offset().top;
