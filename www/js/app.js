@@ -2275,8 +2275,8 @@ function onAppReady(){
             $("#nota_coment_"+value.id_nota+" span").empty();
             $("#nota_coment_"+value.id_nota+" span").append(value.cantidad);
         }
-        var existe_nota = $("#coment_"+value.id_nota);
-        if(existe_nota){
+        var existe = $("#coment_"+value.id_nota);
+        if(existe){
             $("#coment_"+value.id_nota+" span").empty();
             $("#coment_"+value.id_nota+" span").append(value.cantidad);
         }
